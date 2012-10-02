@@ -135,6 +135,8 @@ def problem2():
     # Plot the "relation".
     pl.clf()
     pl.plot(colors, ews, "ok")
+    pl.xlabel(r"$g - r$")
+    pl.ylabel(r"$\mathrm{H}\beta$")
     pl.savefig("results/part2.pdf")
 
 
