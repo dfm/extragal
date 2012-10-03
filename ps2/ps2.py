@@ -77,14 +77,12 @@ def measure_hbeta(sdss_id, wavelengths, flux):
 
     # Build the linear continuum.
     il = (wavelengths >= lower[0]) * (wavelengths <= lower[1])
-    il_mid = np.argmin(np.abs(np.mean(lower) - wavelengths))
-    x1 = wavelengths[il_mid]
-    y1 = np.median(flux[il])
+    y1 = simps(flux[il], x=wavelengths[il]) / (lower[1] - lower[0])
+    x1 = np.mean(lower)
 
     iu = (wavelengths >= upper[0]) * (wavelengths <= upper[1])
-    iu_mid = np.argmin(np.abs(np.mean(upper) - wavelengths))
-    x2 = wavelengths[iu_mid]
-    y2 = np.median(flux[iu])
+    y2 = simps(flux[iu], x=wavelengths[iu]) / (upper[1] - upper[0])
+    x2 = np.mean(upper)
     continuum = (y2 - y1) * (x - x1) / (x2 - x1) + y1
 
     # Integrate.
@@ -140,5 +138,23 @@ def problem2():
     pl.savefig("results/part2.pdf")
 
 
+def problem3():
+    pieces = [[1, 0.5], [6, 0.7], [10, 1.3], [60, 1.4], [90, 3.0]]
+
+    # Sum over the piecewise linear components.
+    s = 0.0
+    for i in range(len(pieces) - 1):
+        x1, y1 = pieces[i]
+        x2, y2 = pieces[i + 1]
+        a = (y2 - y1) / (x2 - x1)
+        b = y1 - a * x1
+
+        s += (a - 1.0) / 1.35 * (x2 ** (-1.35) - x1 ** (-1.35))
+        s += b / 2.35 * (x2 ** (-2.35) - x1 ** (-2.35))
+
+    return 0.144 * s
+
+
 if __name__ == "__main__":
     problem2()
+    print(problem3())

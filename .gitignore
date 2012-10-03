@@ -5,3 +5,5 @@
 *.png
 *.pdf
 *.png
+*.aux
+*.log

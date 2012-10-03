@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{natbib}
+\usepackage{url}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[pdftex]{graphicx}
+
+\usepackage{listings}
+\usepackage{color}
+\lstset{language=Python,
+        basicstyle=\footnotesize\ttfamily,
+        showspaces=false,
+        showstringspaces=false,
+        tabsize=2,
+        breaklines=false,
+        breakatwhitespace=true,
+        identifierstyle=\ttfamily,
+        keywordstyle=\color[rgb]{0,0,1},
+        commentstyle=\color[rgb]{0.133,0.545,0.133},
+        stringstyle=\color[rgb]{0.627,0.126,0.941},
+    }
+
+% header
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[C]{\thepage}
+\fancyhead[R]{Daniel Foreman-Mackey}
+\fancyhead[L]{Extragalactic Astronomy --- Problem Set 2}
+\pagestyle{fancy}
+\setlength{\headheight}{20pt}
+\setlength{\headsep}{10pt}
+
+% shortcuts
+\newcommand{\Eq}[1]{Equation (\ref{eq:#1})}
+\newcommand{\eq}[1]{Equation (\ref{eq:#1})}
+\newcommand{\eqlabel}[1]{\label{eq:#1}}
+\newcommand{\Fig}[1]{Figure \ref{fig:#1}}
+\newcommand{\fig}[1]{Figure \ref{fig:#1}}
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\Tab}[1]{Table \ref{tab:#1}}
+\newcommand{\tab}[1]{Table \ref{tab:#1}}
+\newcommand{\tablabel}[1]{\label{tab:#1}}
+
+% commands
+\newcommand{\sun}{\odot}
+\newcommand{\M}{\ensuremath{\mathcal{M}}}
+\newcommand{\Msun}{\ensuremath{\M_\sun}}
+\newcommand{\dd}{\ensuremath{\,\mathrm{d}}}
+\newcommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
+
+\begin{document}
+
+\section*{Problem 1}
+
+\section*{Problem 2}
+
+The H$\beta$ line index is defined by \citet{worthey} to be in the wavelength
+range 4847.875 \AA--4876.625 \AA. The relevant continuum bands are then
+\begin{equation}
+    4827.875 \, \mathrm{\AA}-4847.875\,\mathrm{\AA} \quad \mathrm{and} \quad
+    4876.625 \, \mathrm{\AA}-4891.625\, \mathrm{\AA} \quad.
+\end{equation}
+The continuum in the line is defined as the linear interpolation between the
+points with wavelengths $\lambda_1 = 4837.875$ \AA\ and $\lambda_2 = 4884.125$
+\AA\ and the flux values
+\begin{eqnarray}
+    f_1 = \frac{1}{20 \, \mathrm{\AA}} \,
+        \int_{4827.875} ^{4847.875} F(\lambda) \dd \lambda
+    \quad \mathrm{and} \quad
+    f_2 = \frac{1}{15 \, \mathrm{\AA}} \,
+        \int_{4876.625} ^{4891.625} F(\lambda) \dd \lambda
+    \quad.
+\end{eqnarray}
+
+
+\section*{Problem 3}
+
+\paragraph{(a)}
+
+The Salpeter IMF is
+\begin{equation}
+    \xi (M) = \xi_0 \, M^{-2.35}
+\end{equation}
+where $\xi_0$ is a normalization constant defined by
+\begin{equation}
+    M_\mathrm{tot} = 10^6 = \int_{0.08} ^{\infty} \xi_0 \, M^{-1.35} \dd M
+        = \frac{0.08^{-0.35} \, \xi_0}{0.35}
+\end{equation}
+where I chose the minimum mass $M_\mathrm{min} \approx 0.08$ because that is
+the minimum mass needed for hydrogen burning. The mass in stars with mass
+$>0.5 \, M_\sun$ is then given by
+\begin{equation}
+    M (>0.5 \, M_\sun) = \int_{0.5} ^\infty \xi (M) \, M \dd M
+        = \left ( \frac{0.5}{0.08} \right )^{-0.35} \times 10^6
+        = 0.526 \times 10^6 \, M_\sun \quad.
+\end{equation}
+
+The \citet{chabrier} IMF is defined as
+\begin{equation}
+    \xi (\log_{10} M) = \frac{\dd N}{\dd \log_{10} M} = \left \{
+    \begin{array}{ll}
+        {\displaystyle
+            0.086 \, \exp \left ( -\frac{1}{2} \,
+            \frac{\left [ \log_{10} M - \log_{10} 0.22 \right ]^2}{0.57^2}
+            \right ) \quad,} & M < 1 \\
+        {\displaystyle 0.0443 \, M^{-1.3}} \quad, & M > 1
+    \end{array} \right . \quad.
+\end{equation}
+Note the logarithmic binning in mass. To find the normalization of the
+function, we must compute
+\begin{eqnarray}
+    M_\mathrm{tot} & = & N_0 \, \int_{\log 0.08} ^{\infty}
+                         M \, \xi (\log M) \dd \log M \\
+                   & = & N_0 \, \int_{\log 0.08} ^{\log 1}
+                         M \, \xi (\log M) \dd \log M +
+                         N_0 \, \int_0 ^\infty M \, \xi(\log M) \dd \log M \\
+                   & = & (0.0268 + 0.0641) \, N_0 = 0.0909 \, N_0 \\
+\end{eqnarray}
+where the first term was solved using Wolfram
+Alpha\footnote{\url{http://bit.ly/PMjcei}}. This means that $N_0 =
+11 \times 10^6$. Now, the mass in stars with $M > 0.5 \, M_\sun$ is
+\begin{equation}
+    M (>0.5 \, M_\sun) = (0.0122 + 0.0641) \, N_0 = 0.839 \times 10^6 M_\sun
+    \quad.
+\end{equation}
+
+
+\paragraph{(b)} Using equations (5.5) and (5.6) from \citet{BM}, the
+main-sequence lifetime of a star with mass $< 2 \, M_\sun$ is
+\begin{equation}
+    \tau_\mathrm{MS} \sim 10 \, \left (\frac{M}{M_\sun} \right ) \,
+        \left ( \frac{L}{L_\sun} \right ) ^{-1}
+        \sim \frac{10}{0.75} \, \left ( \frac{M}{M_\sun} \right )^{-3.8}
+        \quad.
+\end{equation}
+This means that the maximum mass of stars still on the main sequence after
+10 Gyr is $\sim 0.75^{-1/3.8} \approx 1 \, M_\sun$.
+
+To approximate Figure 5.7 from \citet{BM}, I will use the piecewise linear
+function given in \tab{remnant}. The fraction of the stellar mass that is
+returned to the ISM is then given by
+\begin{eqnarray}
+    f & = & \, \int _1 ^{90} \frac{M_\mathrm{initial} -
+    M_\mathrm{remnant} (M_\mathrm{initial})}{M_\mathrm{initial}} \,
+    \frac{\xi (M_\mathrm{initial})}{M_\mathrm{tot}}
+    \dd M_\mathrm{initial} \nonumber \\
+    & = & 0.144 \, \sum_i \int_{M_\mathrm{min}^i} ^{M_\mathrm{max}^i}
+    \left [x \, (1 - a_i) - b_i \right ] \, x^{-3.35} \dd x \\
+    & = & 0.144 \, \sum_i \left \{
+    \frac{a_i - 1}{1.35} \, \left [(M_\mathrm{max}^i)^{-1.35} -
+        (M_\mathrm{min}^i)^{-1.35} \right ]
+    + \frac{b_i}{2.35} \, \left [(M_\mathrm{max}^i)^{-2.35} -
+        (M_\mathrm{min}^i)^{-2.35} \right ]
+    \right \} \nonumber
+\end{eqnarray}
+where the sum is over the piecewise components and $a_i$ and $b_i$ are the
+slope and intercept (respectively) in component $i$. Using the approximation
+in \tab{remnant}, the result is
+\begin{equation}
+    f \approx 0.074 = 7.4 \%
+\end{equation}
+of the mass is returned to the ISM after 10 Gyr.
+
+\begin{table}
+
+    \centering
+
+    \begin{tabular}{c c}
+
+        $M_\mathrm{inital}$ [$M_\sun$] & $M_\mathrm{remnant}$ [$M_\sun$] \\
+
+        \hline
+
+        1  & 0.5 \\
+        6  & 0.7 \\
+        10 & 1.3 \\
+        60 & 1.4 \\
+        90 & 3.0 \\
+
+    \end{tabular}
+
+    \caption{The approximate remnant-mass-initial-mass relation.
+        \tablabel{remnant}}
+
+\end{table}
+
+
+\section*{Problem 4}
+
+Equation (5.6) in \citet{BM} provides a rough approximation of the main
+sequence lifetime for stars as a function of luminosity and initial mass.
+This scaling relation combined with Equation (5.5) gives an approximation
+of the main sequence lifetime as a function of initial mass alone
+\begin{equation}
+    \tau_\mathrm{approx} \sim \frac{10}{0.75} \, \left ( \frac{M}{M_\sun}
+    \right )^{-3.8}
+    \quad.
+\end{equation}
+\tab{mslt} shows this approximate main sequence lifetime as a function of
+initial mass for the masses shown in Figure (5.4) in \citet{BM}. \tab{mslt}
+also lists the main sequence lifetimes from Figure (5.4) in \citet{BM} and
+there is $< 1\%$ discrepancy at all masses.
+
+
+\begin{table}
+
+    \centering
+
+    \begin{tabular}{c c c}
+
+        $M_\mathrm{inital}$ [$M_\sun$] & $\tau_\mathrm{approx}$ [Gyr] &
+        $\tau_\mathrm{MS}$ [Gyr] \\
+
+        \hline
+
+        0.9 & 19.9 & 17.8 \\
+        1.0 & 13.3 & 12.7 \\
+        1.5 & 2.86 & 2.7  \\
+        2.0 & 0.96 & 1.0  \\
+
+    \end{tabular}
+
+    \caption{The approximate main sequence lifetime as a function of initial
+    mass. The third column shows the values read off Figure (5.4) in
+    \citet{BM}. \tablabel{mslt}}
+
+\end{table}
+
+
+\newpage
+
+\begin{thebibliography}{}
+\raggedright
+
+
+\bibitem[Chabrier(2003)]{chabrier} Chabrier, G.\ 2003, PASP,
+    115, 763
+
+\bibitem[Binney \& Merrifield(1998)]{BM}
+    Binney, J., \& Merrifield, M.\ 1998, \emph{Galactic Astronomy},
+    Princeton University Press, 1998
+
+\bibitem[Worthey et al.(1994)]{worthey} Worthey, G., Faber,
+    S.~M., Gonzalez, J.~J., \& Burstein, D.\ 1994, ApJS, 94, 687
+
+
+\end{thebibliography}
+
+\end{document}
+
